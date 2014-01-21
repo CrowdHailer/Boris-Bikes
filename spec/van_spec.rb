@@ -19,9 +19,7 @@ describe Van do
 	end
 
 	it "should empty a stations broken bikes" do
-		expect(test_station.bike_count).to eq(14)
 	 	van.get_broken_bikes(test_station)
-	 	expect(test_station.bike_count).to eq(10)
 	 	expect(van.bike_count).to eq(4)
 	end
 
@@ -32,9 +30,12 @@ describe Van do
 	end
 
 	it "should empty a stations working bikes" do
-		expect(test_station.bike_count).to eq(14)
 	 	test_station.give_working_bikes.each{|bike| van.dock(bike)}
-	 	expect(test_station.bike_count).to eq(4)
 	 	expect(van.bike_count).to eq(10)
+	end
+	
+	it "should throw an error when adding bikes to a full van" do 
+		10.times{van.dock(Bike.new)}
+		expect{van.dock(Bike.new)}.to raise_error
 	end
 end
